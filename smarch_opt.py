@@ -606,8 +606,9 @@ def sample(q, vcount_, clauses_, rands_, wdir_, ccres_, quiet_=False):
 
     return
 
-
-if __name__ == "__main__":
+def main():
+    global SHARPSAT
+    global MARCH
     # test = True
     # if test:
     #     # test script
@@ -722,3 +723,6 @@ if __name__ == "__main__":
         of.close()
 
         print('Output samples created on: ', samplefile)
+
+if __name__ == "__main__":
+    main()

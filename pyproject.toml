@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "smarch_opt"
+version = "0.1.0"
+description = "Smarch - An algorithm for uniform sampling solutions of a propositional formula"
+authors = []
+readme = "README.md"
+include = [
+    { path = "CnC/march_cu/march_cu", format = [
+        "sdist",
+        "wheel",
+    ] },
+    { path = "sharpSAT/build/Release/sharpSAT", format = [
+        "sdist",
+        "wheel",
+    ] },
+]
+build = "build.py"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pycosat = "^0.6.6"
+
+[tool.poetry.scripts]
+smarch_opt = "smarch_opt:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
