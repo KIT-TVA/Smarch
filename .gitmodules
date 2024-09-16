@@ -1,6 +1,6 @@
 [submodule "sharpSAT"]
 	path = sharpSAT
-	url = git@github.com:jeho-oh/sharpSAT.git
+	url = https://github.com/jeho-oh/sharpSAT.git
 [submodule "CnC"]
 	path = CnC
 	url = https://github.com/duckymirror/CnC.git
