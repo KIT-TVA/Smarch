@@ -157,13 +157,24 @@ def count(dimacs_, constraints_):
 
     return res
 
+def read_cubefile(cubefile_):
+    """read cube file"""
+
+    _cubes = list()
+
+    with open(cubefile_) as cf:
+        for _line in cf:
+            _cube = list(_line.split())
+            _cube = _cube[1:len(_cube) - 1]
+            _cubes.append(_cube)
+
+    return _cubes
 
 # partition space by cubes and count number of solutions for each cube
 def count_cc(assigned_, vcount_, clauses_, wdir_, processes_):
     """ count the number of solutions with cube and conquer """
     _total = 0
     _counts = list()
-    _cubes = list()
     _freevar = list()
     _dimacsfile = wdir_ + '/dimacs.smarch'
     _cubefile = wdir_ + '/cubes.smarch'
@@ -197,7 +208,7 @@ def count_cc(assigned_, vcount_, clauses_, wdir_, processes_):
         exit(1)
 
     # execute march to get cubes
-    res = getoutput(MARCH + ' ' + _dimacsfile + ' -d 5 -#')
+    res = getoutput(MARCH + ' ' + _dimacsfile + ' -d 5 -# -o ' + _cubefile)
     _out = res.split("\n")
 
     # print march result (debugging purpose)
@@ -211,10 +222,7 @@ def count_cc(assigned_, vcount_, clauses_, wdir_, processes_):
             _freevar = _line.split(": ")[1].split()
         elif _line.startswith('c all'):
             _allfree = True
-        elif _line.startswith('a'):
-            _cube = list(_line.split())
-            _cube = _cube[1:len(_cube)-1]
-            _cubes.append(_cube)
+    _cubes = read_cubefile(_cubefile)
 
     # double check all variables are free
     if _allfree:
@@ -424,7 +432,6 @@ def sample(q, vcount_, clauses_, rands_, wdir_, ccres_, quiet_=False):
 
     # partition space by cubes and count number of solutions for each cube
     def traverse(assigned_, r_):
-        _cubes = list()
         _freevar = list()
         _selected = list()
         _terminate = False
@@ -445,7 +452,7 @@ def sample(q, vcount_, clauses_, rands_, wdir_, ccres_, quiet_=False):
 
             # execute march to get cubes
             cube_time = time.time()
-            res = getoutput(MARCH + ' ' + _dimacsfile + ' -d 2 -#')
+            res = getoutput(MARCH + ' ' + _dimacsfile + ' -d 2 -# -o ' + _cubefile)
             _out = res.split("\n")
             cube_time = time.time() - cube_time
 
@@ -454,10 +461,7 @@ def sample(q, vcount_, clauses_, rands_, wdir_, ccres_, quiet_=False):
                     _freevar = _line.split(": ")[1].split()
                 elif _line.startswith('c all'):
                     _allfree = True
-                elif _line.startswith('a'):
-                    _cube = list(_line.split())
-                    _cube = _cube[1:len(_cube) - 1]
-                    _cubes.append(_cube)
+            _cubes = read_cubefile(_cubefile)
 
             # print march result (debugging purpose)
             if DEBUG:
