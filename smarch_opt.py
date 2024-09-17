@@ -222,7 +222,7 @@ def count_cc(assigned_, vcount_, clauses_, wdir_, processes_):
             _freevar = _line.split(": ")[1].split()
         elif _line.startswith('c all'):
             _allfree = True
-    _cubes = read_cubefile(_cubefile)
+    _cubes = list() if _allfree else read_cubefile(_cubefile)
 
     # double check all variables are free
     if _allfree:
@@ -461,7 +461,7 @@ def sample(q, vcount_, clauses_, rands_, wdir_, ccres_, quiet_=False):
                     _freevar = _line.split(": ")[1].split()
                 elif _line.startswith('c all'):
                     _allfree = True
-            _cubes = read_cubefile(_cubefile)
+            _cubes = list() if _allfree else read_cubefile(_cubefile)
 
             # print march result (debugging purpose)
             if DEBUG:
