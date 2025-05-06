@@ -1,6 +1,6 @@
 [submodule "sharpSAT"]
 	path = sharpSAT
-	url = https://github.com/duckymirror/sharpSAT.git
+	url = https://github.com/KIT-TVA/sharpSAT.git
 [submodule "CnC"]
 	path = CnC
-	url = https://github.com/duckymirror/CnC.git
+	url = https://github.com/KIT-TVA/CnC.git
